@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esempio DOM e Eventi (solo HTML)</title>
+
+  <!-- JavaScript nell’header -->
+  <script>
+    function cambiaColoreTitolo() {
+      document.getElementById("titolo").style.color = "red";
+    }
+  </script>
+
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 30px; }
+    button { margin: 5px; padding: 8px 15px; cursor: pointer; }
+    #output { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body onload="alert('Pagina caricata!')"><!-- Evento 1: onload -->
+
+  <h1 id="titolo" onclick="cambiaColoreTitolo()">Cliccami per cambiare colore</h1> <!-- Evento 2: onclick -->
+  <p id="paragrafo">Passa sopra questo testo!</p> <!-- Evento 3: onmouseover -->
+
+  <button id="bottone1">Aggiungi testo</button> <!-- Evento 4 -->
+  <button id="bottone2">Nascondi/Mostra paragrafo</button> <!-- Evento 5 -->
+
+  <input type="text" id="campoTesto" placeholder="Scrivi qualcosa..."> <!-- Evento 6 -->
+  <div id="output"></div>
+
+  <select id="selettore"> <!-- Evento 7 -->
+    <option value="">Scegli un colore...</option>
+    <option value="lightblue">Azzurro</option>
+    <option value="lightgreen">Verde</option>
+    <option value="lightyellow">Giallo</option>
+  </select>
+
+  <form id="form"> <!-- Evento 8 -->
+    <input type="text" id="nome" placeholder="Nome">
+    <button type="submit">Invia</button>
+  </form>
+
+  <img id="immagine" src="https://via.placeholder.com/150" alt="Immagine esempio"> <!-- Evento 9 -->
+
+  <p id="dataOra"></p> <!-- usato per evento 10 -->
+
+  <!-- JavaScript nel body -->
+  <script>
+    // Evento 3: onmouseover / mouseout
+    document.getElementById("paragrafo").addEventListener("mouseover", function() {
+      this.style.backgroundColor = "lightgray";
+    });
+    document.getElementById("paragrafo").addEventListener("mouseout", function() {
+      this.style.backgroundColor = "";
+    });
+
+    // Evento 4: bottone1 clic
+    document.getElementById("bottone1").addEventListener("click", function() {
+      const nuovo = document.createElement("p");
+      nuovo.textContent = "Nuovo paragrafo aggiunto!";
+      document.body.appendChild(nuovo);
+    });
+
+    // Evento 5: bottone2 clic
+    document.getElementById("bottone2").addEventListener("click", function() {
+      const p = document.getElementById("paragrafo");
+      p.style.display = (p.style.display === "none") ? "block" : "none";
+    });
+
+    // Evento 6: input testo
+    document.getElementById("campoTesto").addEventListener("input", function() {
+      document.getElementById("output").textContent = "Hai scritto: " + this.value;
+    });
+
+    // Evento 7: cambio selettore
+    document.getElementById("selettore").addEventListener("change", function() {
+      document.body.style.backgroundColor = this.value;
+    });
+
+    // Evento 8: invio form
+    document.getElementById("form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Modulo inviato da " + document.getElementById("nome").value);
+    });
+
+    // Evento 9: doppio clic su immagine
+    document.getElementById("immagine").addEventListener("dblclick", function() {
+      this.src = "https://via.placeholder.com/150/ff0000/ffffff";
+    });
+
+    // Evento 10: aggiornamento data e ora ogni secondo
+    setInterval(() => {
+      document.getElementById("dataOra").textContent = new Date().toLocaleString();
+    }, 1000);
+  </script>
+</body>
+</html>
